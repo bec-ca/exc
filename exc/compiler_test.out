@@ -1,0 +1,100 @@
+================================================================================
+Test: basic
+-----------------
+header:
+test.generated.hpp
+
+#pragma once
+
+#include <array>
+#include <cstdint>
+
+#include "exc/enum.hpp"
+
+namespace ns_foo {
+
+enum class foobar {
+  abc,
+  dce,
+  efg,
+
+};
+
+enum class baz {
+  qwe,
+  asd,
+  zxc,
+
+};
+
+} // namespace ns_foo
+
+template <> struct exc::Enum<ns_foo::foobar> {
+ public:
+  using foobar = ns_foo::foobar;
+
+  static const char* to_string(foobar t);
+
+  static constexpr size_t count = 3;
+
+  static constexpr std::array<foobar, count> all = {
+    foobar::abc,
+    foobar::dce,
+    foobar::efg,
+
+  };
+};
+
+static_assert(exc::is_ex_enum<ns_foo::foobar>);
+
+template <> struct exc::Enum<ns_foo::baz> {
+ public:
+  using baz = ns_foo::baz;
+
+  static const char* to_string(baz t);
+
+  static constexpr size_t count = 3;
+
+  static constexpr std::array<baz, count> all = {
+    baz::qwe,
+    baz::asd,
+    baz::zxc,
+
+  };
+};
+
+static_assert(exc::is_ex_enum<ns_foo::baz>);
+
+-----------------
+src:
+test.generated.cpp
+
+#include "test.generated.hpp"
+
+namespace ns_foo {}
+
+const char* exc::Enum<ns_foo::foobar>::to_string(ns_foo::foobar e)
+{
+  switch (e) {
+  case foobar::abc:
+    return "abc";
+  case foobar::dce:
+    return "dce";
+  case foobar::efg:
+    return "efg";
+  }
+}
+
+const char* exc::Enum<ns_foo::baz>::to_string(ns_foo::baz e)
+{
+  switch (e) {
+  case baz::qwe:
+    return "qwe";
+  case baz::asd:
+    return "asd";
+  case baz::zxc:
+    return "zxc";
+  }
+}
+
+

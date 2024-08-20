@@ -1,0 +1,12 @@
+ns exc
+
+enum Example {
+  Apple
+  Orange
+  Pineapple
+  Banana
+  Extra
+  OneMore
+  Other
+  LastOne
+}

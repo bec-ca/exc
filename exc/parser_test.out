@@ -1,0 +1,10 @@
+================================================================================
+Test: basic
+file test.exc
+ns foo.bar
+enum Something:
+  foo
+  bar
+  other
+
+

@@ -1,0 +1,21 @@
+ns exc
+
+enum TokenKind {
+  // Required by tokenizer
+  Empty
+  Comment
+  String
+  Number
+  Identifier
+  Eof
+
+  // Keywords
+  Namespace
+  Enum
+
+  // Symbols
+  OpenBraces
+  CloseBraces
+  Semicolon
+  Period
+}

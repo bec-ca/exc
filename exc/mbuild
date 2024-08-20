@@ -1,0 +1,103 @@
+cpp_library:
+  name: code
+  sources: code.cpp
+  headers: code.hpp
+  libs:
+    /bee/file_path
+    /bee/format
+    /bee/string_util
+
+cpp_library:
+  name: compiler
+  sources: compiler.cpp
+  headers: compiler.hpp
+  libs:
+    /bee/print
+    /bee/string_util
+    code
+    enum
+
+cpp_test:
+  name: compiler_test
+  sources: compiler_test.cpp
+  libs:
+    /bee/testing
+    /clang_format/clang_format
+    compiler
+  output: compiler_test.out
+
+cpp_library:
+  name: enum
+  headers: enum.hpp
+  libs: /bee/to_string_t
+
+cpp_library:
+  name: example.generated
+  sources: example.generated.cpp
+  headers: example.generated.hpp
+  libs: enum
+
+gen_rule:
+  name: example_exc_codegen
+  binary: /exc/exc
+  flags:
+    compile
+    example.exc
+  data: example.exc
+  outputs:
+    example.generated.cpp
+    example.generated.hpp
+
+cpp_test:
+  name: example_test
+  sources: example_test.cpp
+  libs:
+    /bee/testing
+    example.generated
+  output: example_test.out
+
+cpp_binary:
+  name: exc
+  libs: exc_main
+
+cpp_library:
+  name: exc_main
+  sources: exc_main.cpp
+  libs:
+    /bee/file_writer
+    /clang_format/clang_format
+    /command/command_builder
+    /command/file_path
+    /command/group_builder
+    compiler
+    parser
+
+cpp_library:
+  name: parser
+  sources: parser.cpp
+  headers: parser.hpp
+  libs:
+    /bee/file_path
+    /bee/file_reader
+    /bee/or_error
+    /bee/string_util
+    /tokenizer/token_reader
+    /tokenizer/tokenizer
+    /tokenizer/typed_token
+    code
+    token_kind.generated
+
+cpp_test:
+  name: parser_test
+  sources: parser_test.cpp
+  libs:
+    /bee/testing
+    parser
+  output: parser_test.out
+
+cpp_library:
+  name: token_kind.generated
+  sources: token_kind.generated.cpp
+  headers: token_kind.generated.hpp
+  libs: enum
+
